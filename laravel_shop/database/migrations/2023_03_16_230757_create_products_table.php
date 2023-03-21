@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             // $table->string('Specifications'); //TODO
-            $table->string('Description');
+            $table->integer('price');
+            $table->string('description');
             $table->string('slug')->unique();
             $table->boolean('stock')->default(TRUE);
             $table->timestamps();
