@@ -1,58 +1,59 @@
+@echo off
 # Hub (extend git commands)
-alias git=hub
+DOSKEY git=hub
  
 # Directories
-alias ll='ls -FGlAhp'
-alias ..="cd ../"
-alias ...="cd ../../"
-alias ....="cd ../../../"
-alias .....="cd ../../../../"
+DOSKEY ll='ls -FGlAhp'
+DOSKEY ..="cd ../"
+DOSKEY ...="cd ../../"
+DOSKEY ....="cd ../../../"
+DOSKEY .....="cd ../../../../"
  
-alias df="df -h"
-alias diskusage="df"
-alias fu="du -ch"
-alias folderusage="fu"
-alias tfu="du -sh"
-alias totalfolderusage="tfu"
+DOSKEY df="df -h"
+DOSKEY diskusage="df"
+DOSKEY fu="du -ch"
+DOSKEY folderusage="fu"
+DOSKEY tfu="du -sh"
+DOSKEY totalfolderusage="tfu"
  
-alias finder='open -a 'Finder' .'
+DOSKEY finder='open -a 'Finder' .'
  
 # Vagrant
-alias vagrantgo="vagrant up && vagrant ssh"
-alias vgo="vagrantgo"
-alias vhalt="vagrant halt"
-alias vreload="vagrant reload && vgo"
+DOSKEY vagrantgo="vagrant up && vagrant ssh"
+DOSKEY vgo="vagrantgo"
+DOSKEY vhalt="vagrant halt"
+DOSKEY vreload="vagrant reload && vgo"
  
 # PHP
-alias c='composer'
-alias cr='composer require'
-alias cda='composer dumpautoload'
-alias co='composer outdated --direct'
-alias update-global-composer='cd ~/.composer && composer update'
-alias composer-update-global='update-global-composer'
+DOSKEY c='composer'
+DOSKEY cr='composer require'
+DOSKEY cda='composer dumpautoload'
+DOSKEY co='composer outdated --direct'
+DOSKEY update-global-composer='cd ~/.composer && composer update'
+DOSKEY composer-update-global='update-global-composer'
  
-alias a='php artisan'
-alias pa='php artisan'
-alias phpa='php artisan'
-alias art='php artisan'
-alias arti='php artisan'
+DOSKEY a='php artisan'
+DOSKEY pa='php artisan'
+DOSKEY phpa='php artisan'
+DOSKEY art='php artisan'
+DOSKEY arti='php artisan'
  
-alias test='vendor/bin/phpunit'
+DOSKEY test='vendor/bin/phpunit'
  
-alias y='yarn'
-alias yr='yarn run'
+DOSKEY y='yarn'
+DOSKEY yr='yarn run'
  
 # Homestead
-alias edithomestead='open -a "Visual Studio Code" ~/Homestead/Homestead.yaml'
-alias homesteadedit='edithomestead'
-alias dev-homestead='cd ~/Homestead && vgo'
-alias homestead-update='cd ~/Homestead && vagrant box update && git pull origin master'
-alias update-homestead='homestead-update'
+DOSKEY edithomestead='open -a "Visual Studio Code" ~/Homestead/Homestead.yaml'
+DOSKEY homesteadedit='edithomestead'
+DOSKEY dev-homestead='cd ~/Homestead && vgo'
+DOSKEY homestead-update='cd ~/Homestead && vagrant box update && git pull origin master'
+DOSKEY update-homestead='homestead-update'
  
 # Various
-alias editaliases='open -a "Visual Studio Code" ~/.bash_aliases'
-alias showpublickey='cat ~/.ssh/id_ed25519.pub'
-alias ip="curl icanhazip.com"
-alias localip="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
-alias copy='rsync -avv --stats --human-readable --itemize-changes --progress --partial'
+DOSKEY editaliases='open -a "Visual Studio Code" ~/.bash_aliases'
+DOSKEY showpublickey='cat ~/.ssh/id_ed25519.pub'
+DOSKEY ip="curl icanhazip.com"
+DOSKEY localip="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
+DOSKEY copy='rsync -avv --stats --human-readable --itemize-changes --progress --partial'
  
