@@ -1,0 +1,425 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel shop",
+        "description": "API of a simple shop website.",
+        "version": "1.0.1"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Local Machine"
+        },
+        {
+            "url": "http://localhost:8000"
+        }
+    ],
+    "paths": {
+        "/api/v1/products": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get list of products",
+                "description": "Returns list of products",
+                "operationId": "getProducts",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Stores a new Product",
+                "description": "Stores record in the database",
+                "operationId": "insertProduct",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/v1/products/{id}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Returns a single product",
+                "description": "Retreives record from database",
+                "operationId": "getProduct",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the product which is asked for",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Updates a single product",
+                "description": "Updates a record in database",
+                "operationId": "3fc3b82e9e2b67b5158eda8de45339db",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product's id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Delete Existing Product",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteCity",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product's id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Product": {
+                "title": "Product",
+                "description": "Product Model",
+                "properties": {
+                    "id": {
+                        "title": "Id",
+                        "description": "Id of the product",
+                        "type": "integer",
+                        "format": "integer",
+                        "example": "1"
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "products name",
+                        "type": "string",
+                        "format": "string",
+                        "example": "asus laptop"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "products description",
+                        "type": "string",
+                        "example": "Veniam excepteur ex excepteur aliquip aute sunt minim et."
+                    },
+                    "slug": {
+                        "title": "Slug",
+                        "description": "slug for a product",
+                        "type": "string",
+                        "example": "asuse-laptop-274h8fk"
+                    },
+                    "stock": {
+                        "title": "NationalCode Verified",
+                        "description": "Is this product stocked?",
+                        "type": "boolean",
+                        "example": "false"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Product"
+                }
+            },
+            "Provider": {
+                "title": "Provider",
+                "description": "Provider Model",
+                "properties": {
+                    "email": {
+                        "title": "E-Mail",
+                        "description": "E-Mail of the individual",
+                        "type": "string",
+                        "format": "string",
+                        "example": "smile@tyyi.net"
+                    },
+                    "nationalcode": {
+                        "title": "nationalcode",
+                        "description": "nationalcode",
+                        "type": "string",
+                        "format": "string",
+                        "example": "3860000000"
+                    },
+                    "fathername": {
+                        "title": "Father's name",
+                        "description": "Firstname of the individual's parent",
+                        "type": "string",
+                        "example": "Mohammad"
+                    },
+                    "nationalcode_verified": {
+                        "title": "NationalCode Verified",
+                        "description": "Is ownership of national code verified",
+                        "type": "boolean",
+                        "example": "false"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Provider"
+                }
+            },
+            "Province": {
+                "title": "Province",
+                "description": "Province Model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "integer",
+                        "example": 1
+                    },
+                    "slug": {
+                        "title": "slug",
+                        "description": "slug",
+                        "type": "string",
+                        "format": "string",
+                        "example": "aze"
+                    },
+                    "code": {
+                        "title": "code",
+                        "description": "code",
+                        "type": "string",
+                        "format": "string",
+                        "example": "041"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the state",
+                        "type": "string",
+                        "example": "همدان"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Province"
+                }
+            },
+            "User": {
+                "title": "User",
+                "description": "User Model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID of the user",
+                        "type": "integer",
+                        "format": "integer",
+                        "example": 1
+                    },
+                    "phone": {
+                        "title": "Phone",
+                        "description": "Phone number of user",
+                        "type": "string",
+                        "format": "string",
+                        "example": "+989388063351"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Fullname of the user",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Mohammad R. Tayyebi"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Secret Passkey",
+                        "type": "string",
+                        "format": "string",
+                        "example": "3Xample123!@#"
+                    },
+                    "api_token": {
+                        "title": "API Token",
+                        "description": "Secret random key",
+                        "type": "string",
+                        "format": "string",
+                        "example": "aabbcc112233"
+                    },
+                    "type": {
+                        "title": "Type",
+                        "description": "User type which defines permissions",
+                        "type": "string",
+                        "format": "string",
+                        "example": "administrator"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearer_token": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer {jwt})",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Providers",
+            "description": "v1"
+        },
+        {
+            "name": "Users",
+            "description": "v1"
+        },
+        {
+            "name": "Products",
+            "description": "v1"
+        },
+        {
+            "name": "Categories",
+            "description": "v1"
+        },
+        {
+            "name": "Brands",
+            "description": "v1"
+        },
+        {
+            "name": "Geo",
+            "description": "v1"
+        }
+    ],
+    "security": [
+        {
+            "bearer_token": []
+        }
+    ]
+}
