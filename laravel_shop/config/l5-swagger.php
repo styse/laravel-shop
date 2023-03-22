@@ -141,11 +141,11 @@ return [
             */
             'exclude' => [],
 
-            /*
-             * Allows to generate specs either for OpenAPI 3.0.0 or OpenAPI 3.1.0.
-             * By default the spec will be in version 3.0.0
-             */
-            'open_api_spec_version' => env('L5_SWAGGER_OPEN_API_SPEC_VERSION', \L5Swagger\Generator::OPEN_API_DEFAULT_SPEC_VERSION),
+            // /*
+            //  * Allows to generate specs either for OpenAPI 3.0.0 or OpenAPI 3.1.0.
+            //  * By default the spec will be in version 3.0.0
+            //  */
+            // 'open_api_spec_version' => env('L5_SWAGGER_OPEN_API_SPEC_VERSION', \L5Swagger\Generator::OPEN_API_DEFAULT_SPEC_VERSION),
         ],
 
         /*
@@ -153,6 +153,14 @@ return [
         */
         'securityDefinitions' => [
             'securitySchemes' => [
+
+                'bearer_token' => [
+                    'type' => 'apiKey',
+                    'description' => 'Enter token in format (Bearer {jwt})',
+                    'name' => 'Authorization',
+                    'in' => 'header',
+                ],
+
                 /*
                  * Examples of Security schemes
                 */
@@ -204,6 +212,7 @@ return [
                  * Examples of Securities
                 */
                 [
+                    'bearer_token' => [],
                     /*
                     'oauth2_security_example' => [
                         'read',
@@ -294,7 +303,7 @@ return [
          * Constants which can be used in annotations
          */
         'constants' => [
-            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
+            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://127.0.0.1:8000'),
         ],
     ],
 ];
