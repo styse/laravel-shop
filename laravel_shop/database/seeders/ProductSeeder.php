@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ProductsTableSeeder extends Seeder
+class ProductSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-
         $items = [
             ['id'=>1, 'name'=>'Classical Guitar - Yamaha C40', 'price'=>10000000, 'description'=>'The classical guitar is a member of the guitar family used in classical music and other styles.', 'slug'=>'yamaha-c40', 'stock'=>'1']
            ,['id'=>2, 'name'=>'Classical Guitar - Yamaha C70', 'price'=>10000001, 'description'=>' An acoustic wooden string instrument with strings made of gut or nylon.', 'slug'=>'yamaha-c70', 'stock'=>'0']
@@ -22,16 +22,5 @@ class ProductsTableSeeder extends Seeder
 
         foreach ($items as $item)
             DB::table('products')->insert($item);
-
-        
-    //     $items = [
-    //         ['id'=>1, 'name'=>'Off-road', 'description'=>'Off-road equipment']
-    //        ,['id'=>2, 'name'=>'SUV', 'description'=>'SUV and family cars equipments']
-    //        ,['id'=>3, 'name'=>'خدمات آپاراتی', 'description'=>'...']
-    //        ,['id'=>4, 'name'=>'خدمات فروشگاه', 'description'=>'...']
-
-    //    ];
-    //    foreach ($items as $item)
-    //        Category::create($item);
     }
 }
