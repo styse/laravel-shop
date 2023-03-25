@@ -1,9 +1,9 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 
 /**
  * @OA\Schema(
@@ -14,57 +14,67 @@ use Illuminate\Database\Eloquent\Model;
  *     )
  * )
  */
+
 class Provider extends Model
 {
     use HasFactory;
-    protected $fillable = ['id', 'email', 'nationalcode', 'nationalcode_verified' , 'fathername'];
+    protected $fillable = ['id', 'name', 'slug', 'address' , 'phone'];
 
     
     /** 
      * @OA\Property(
-     *     title="E-Mail",
-     *     description="E-Mail of the individual",
-     *     format="string",
-     *     example="smile@tyyi.net"
+     *     title="Id",
+     *     description="Id of the provider",
+     *     format="integer",
+     *     example="1"
      * )
      *
-     * @var string
+     * @var integer
      */
-    private $email;
+    private $id;
 
      /** 
      * @OA\Property(
-     *     title="nationalcode",
-     *     description="nationalcode",
+     *     title="name",
+     *     description="providers name",
      *     format="string",
-     *     example="3860000000"
+     *     example="asus laptop"
      * )
      *
      * @var string
      */
-    private $nationalcode;
+    private $name;
 
     /**
      * @OA\Property(
-     *      title="Father's name",
-     *      description="Firstname of the individual's parent",
-     *      example="Mohammad"
+     *      title="Slug",
+     *      description="slug for a provider",
+     *      example="asuse-laptop-274h8fk"
      * )
      *
      * @var string
      */
-    public $fathername;
+    public $slug;
+
+    /**
+     * @OA\Property(
+     *      title="address",
+     *      description="providers address",
+     *      example="Veniam excepteur ex excepteur aliquip aute sunt minim et."
+     * )
+     *
+     * @var string
+     */
+    public $address;
 
     /**
      * @OA\Property(
      *      title="NationalCode Verified",
-     *      description="Is ownership of national code verified",
-     *      example="false"
+     *      description="providers phone number",
+     *      example="+9813468053"
      * )
      *
-     * @var boolean
+     * @var string
      */
-    public $nationalcode_verified;
-
+    public $phone;
 }
-
