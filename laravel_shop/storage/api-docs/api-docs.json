@@ -210,6 +210,202 @@
                     }
                 }
             }
+        },
+        "/api/v1/providers": {
+            "get": {
+                "tags": [
+                    "Providers"
+                ],
+                "summary": "Get list of providers",
+                "description": "Returns list of providers",
+                "operationId": "getProviders",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Provider"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Providers"
+                ],
+                "summary": "Stores a new provider",
+                "description": "Stores record in the database",
+                "operationId": "insertProvider",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Provider"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Provider"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/v1/providers/{id}": {
+            "get": {
+                "tags": [
+                    "Providers"
+                ],
+                "summary": "Returns a single provider",
+                "description": "Retreives record from database",
+                "operationId": "getProvider",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the provider which is asked for",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Provider"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Providers"
+                ],
+                "summary": "Updates a single provider",
+                "description": "Updates a record in database",
+                "operationId": "35e1fc997bd04a00c8d885bdcae31849",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Provider's id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Provider"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Provider"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Providers"
+                ],
+                "summary": "Delete Existing Provider",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteProvider",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Provider's id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -260,31 +456,37 @@
                 "title": "Provider",
                 "description": "Provider Model",
                 "properties": {
-                    "email": {
-                        "title": "E-Mail",
-                        "description": "E-Mail of the individual",
+                    "id": {
+                        "title": "Id",
+                        "description": "Id of the provider",
+                        "type": "integer",
+                        "format": "integer",
+                        "example": "1"
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "providers name",
                         "type": "string",
                         "format": "string",
-                        "example": "smile@tyyi.net"
+                        "example": "asus laptop"
                     },
-                    "nationalcode": {
-                        "title": "nationalcode",
-                        "description": "nationalcode",
+                    "slug": {
+                        "title": "Slug",
+                        "description": "slug for a provider",
                         "type": "string",
-                        "format": "string",
-                        "example": "3860000000"
+                        "example": "asuse-laptop-274h8fk"
                     },
-                    "fathername": {
-                        "title": "Father's name",
-                        "description": "Firstname of the individual's parent",
+                    "address": {
+                        "title": "address",
+                        "description": "providers address",
                         "type": "string",
-                        "example": "Mohammad"
+                        "example": "Veniam excepteur ex excepteur aliquip aute sunt minim et."
                     },
-                    "nationalcode_verified": {
+                    "phone": {
                         "title": "NationalCode Verified",
-                        "description": "Is ownership of national code verified",
-                        "type": "boolean",
-                        "example": "false"
+                        "description": "providers phone number",
+                        "type": "string",
+                        "example": "+9813468053"
                     }
                 },
                 "type": "object",
