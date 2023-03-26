@@ -232,7 +232,7 @@ class usersController extends Controller
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Person")
+     *          @OA\JsonContent(ref="#/components/schemas/User")
      *       ),
      *      @OA\Response(
      *          response=401,
@@ -270,13 +270,13 @@ class usersController extends Controller
      *      @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="application/json",
-     *             @OA\Schema(ref="#/components/schemas/UpdatePerson")
+     *             @OA\Schema(ref="#/components/schemas/User")
      *         )
      *     ),
      *      @OA\Response(
      *          response=202,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/UpdatePerson")
+     *          @OA\JsonContent(ref="#/components/schemas/User")
      *       ),
      *      @OA\Response(
      *          response=400,
