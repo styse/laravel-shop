@@ -15,6 +15,204 @@
         }
     ],
     "paths": {
+        "/api/v1/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get list of categories",
+                "description": "Returns list of categories",
+                "operationId": "getCategories",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Stores a new category",
+                "description": "Stores record in the database",
+                "operationId": "insertCategory",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Category"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/v1/categoris/{id}": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Returns a single category",
+                "description": "Retreives record from database",
+                "operationId": "getCategory",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the category which is asked for",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/v1/categories/{id}": {
+            "put": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Updates a single category",
+                "description": "Updates a record in database",
+                "operationId": "967daab8505178dee4bebbf667484546",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Category's id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Category"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Delete Existing Category",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteCategory",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Category's id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
         "/api/v1/products": {
             "get": {
                 "tags": [
@@ -126,7 +324,7 @@
                 ],
                 "summary": "Updates a single product",
                 "description": "Updates a record in database",
-                "operationId": "3fc3b82e9e2b67b5158eda8de45339db",
+                "operationId": "711d2714dc6bab3f0a5d4838fc0654ad",
                 "parameters": [
                     {
                         "name": "id",
@@ -178,7 +376,7 @@
                 ],
                 "summary": "Delete Existing Product",
                 "description": "Deletes a record and returns no content",
-                "operationId": "deleteCity",
+                "operationId": "deleteProduct",
                 "parameters": [
                     {
                         "name": "id",
@@ -322,7 +520,7 @@
                 ],
                 "summary": "Updates a single provider",
                 "description": "Updates a record in database",
-                "operationId": "35e1fc997bd04a00c8d885bdcae31849",
+                "operationId": "6051418814eb018b3385a5dcb4fa5e67",
                 "parameters": [
                     {
                         "name": "id",
@@ -406,10 +604,367 @@
                     }
                 }
             }
+        },
+        "/api/v1/login": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Creates a new API key for the user",
+                "description": "It will generate a new token for their login.",
+                "operationId": "Login",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResult"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/v1/register": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Stores a new user",
+                "description": "Stores record in the database",
+                "operationId": "Register",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Register"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Register"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/v1/changePassword": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Change users password",
+                "description": "Stores password in the database",
+                "operationId": "ChangePassword",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChangePassword"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChangePassword"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/v1/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get list of users",
+                "description": "Returns list of users",
+                "operationId": "getUsers",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    }
+                }
+            }
+        },
+        "/api/v1/person/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Returns a single User",
+                "description": "Retreives record from database",
+                "operationId": "getPerson",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the user which is asked for",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/v1/person/{phone}": {
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update user information",
+                "description": "Updates a record in database",
+                "operationId": "93d129a3294c29a82bc1eabffba7260c",
+                "parameters": [
+                    {
+                        "name": "phone",
+                        "in": "path",
+                        "description": "User's phone",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
+            "Category": {
+                "title": "Category",
+                "description": "Category Model",
+                "xml": {
+                    "name": "Category"
+                }
+            },
+            "ChangePassword": {
+                "title": "Change Password",
+                "description": "Change Password Model",
+                "properties": {
+                    "phone": {
+                        "title": "phone",
+                        "description": "Phone number of user",
+                        "type": "string",
+                        "format": "string",
+                        "example": "+989388063351"
+                    },
+                    "current_password": {
+                        "title": "Current Password",
+                        "description": "Secret Passkey",
+                        "type": "string",
+                        "format": "string",
+                        "example": "3Xample123!@#"
+                    },
+                    "new_password": {
+                        "title": "New Password",
+                        "description": "Secret Passkey",
+                        "type": "string",
+                        "format": "string",
+                        "example": "eXamplel456"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ChangePassword"
+                }
+            },
+            "Login": {
+                "title": "Login",
+                "description": "Login Model",
+                "properties": {
+                    "phone": {
+                        "title": "Phone",
+                        "description": "Login of the user",
+                        "type": "string",
+                        "format": "string",
+                        "example": "000"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Secret passphrase of the user",
+                        "type": "string",
+                        "format": "string",
+                        "example": "***"
+                    },
+                    "generate_new_api_key": {
+                        "title": "Generate new API key",
+                        "description": "To allow API to generate a new session",
+                        "type": "boolean",
+                        "format": "boolean",
+                        "example": false
+                    },
+                    "type": {
+                        "title": "Type",
+                        "description": "The user type",
+                        "type": "string",
+                        "format": "string",
+                        "example": "administrator"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Login"
+                }
+            },
+            "LoginResult": {
+                "title": "LoginResult",
+                "description": "LoginResult Model",
+                "properties": {
+                    "username": {
+                        "title": "Username",
+                        "description": "Login of the user",
+                        "type": "string",
+                        "format": "string",
+                        "example": "guest"
+                    },
+                    "api_key": {
+                        "title": "API Key",
+                        "description": "Bearer Token Generated for Authorization",
+                        "type": "string",
+                        "format": "string",
+                        "example": "qwertyuioplkjhgfdsazxcvbnm123456"
+                    },
+                    "success": {
+                        "title": "Success",
+                        "description": "Was login successful",
+                        "type": "boolean",
+                        "format": "boolean",
+                        "example": false
+                    },
+                    "type": {
+                        "title": "Type",
+                        "description": "The user type",
+                        "type": "string",
+                        "format": "string",
+                        "example": "administrator"
+                    },
+                    "user_id": {
+                        "title": "ID",
+                        "description": "ID of the user",
+                        "type": "integer",
+                        "format": "integer",
+                        "example": 1
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "LoginResult"
+                }
+            },
             "Product": {
                 "title": "Product",
                 "description": "Product Model",
@@ -494,41 +1049,42 @@
                     "name": "Provider"
                 }
             },
-            "Province": {
-                "title": "Province",
-                "description": "Province Model",
+            "Register": {
+                "title": "Register",
+                "description": "Register Model",
                 "properties": {
-                    "id": {
-                        "title": "ID",
-                        "description": "ID",
-                        "type": "integer",
-                        "format": "integer",
-                        "example": 1
-                    },
-                    "slug": {
-                        "title": "slug",
-                        "description": "slug",
+                    "phone": {
+                        "title": "Phone",
+                        "description": "Phone number of user",
                         "type": "string",
                         "format": "string",
-                        "example": "aze"
-                    },
-                    "code": {
-                        "title": "code",
-                        "description": "code",
-                        "type": "string",
-                        "format": "string",
-                        "example": "041"
+                        "example": "+989388063351"
                     },
                     "name": {
                         "title": "Name",
-                        "description": "Name of the state",
+                        "description": "Fullname of the user",
                         "type": "string",
-                        "example": "همدان"
+                        "format": "string",
+                        "example": "Mohammad R. Tayyebi"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Secret Passkey",
+                        "type": "string",
+                        "format": "string",
+                        "example": "3Xample123!@#"
+                    },
+                    "api_token": {
+                        "title": "API Token",
+                        "description": "Secret random key",
+                        "type": "string",
+                        "format": "string",
+                        "example": "aabbcc112233"
                     }
                 },
                 "type": "object",
                 "xml": {
-                    "name": "Province"
+                    "name": "Register"
                 }
             },
             "User": {

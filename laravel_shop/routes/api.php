@@ -14,6 +14,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'prefix' => 'v1', 
+    'as' => 'api.', 
+    'namespace' => 'App\Http\Controllers\V1', 
+    'middleware' => []
+], function () {
+    Route::post('register', 'UsersController@store');
+    Route::post('login', 'UsersController@login');
+});
+
+
+Route::group([
+    'prefix' => 'v1', 
+    'as' => 'api.', 
+    'namespace' => 'App\Http\Controllers\V1', 
+    'middleware' => [
+            // App\Http\Middleware\HandlePutFormData::class,
+            'auth:api',
+    ]
+], function () {
+    Route::apiResource('categories', 'CategoriesController');
+    Route::apiResource('products', 'ProductsController');
+    Route::apiResource('providers', 'ProvidersController');
+    Route::put('person/{phone}', 'usersController@update');
+    Route::get('person/{id}', 'usersController@show');
+    Route::get('people', 'usersController@index');
+    Route::post('changePassword', 'usersController@changePassword');
 });
