@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
-class ProductsController extends Controller
+class productsController extends Controller
 {
 
     /**
@@ -123,7 +123,7 @@ class ProductsController extends Controller
      */
     public function show(int $id)
     {
-        abort_if(FacadesGate::denies('products-get') , Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(FacadesGate::denies('products-get') , Response::HTTP_FORBIDDEN, '403 Forbidden');
         
         $product = Product::findOrFail($id);
 
@@ -192,7 +192,7 @@ class ProductsController extends Controller
     /**
      * @OA\Delete(
      *      path="/api/v1/products/{id}",
-     *      operationId="deleteCity",
+     *      operationId="deleteProduct",
      *      tags={"Products"},
      *      summary="Delete Existing Product",
      *      description="Deletes a record and returns no content",
@@ -226,7 +226,7 @@ class ProductsController extends Controller
      */
     public function destroy(Product $product)
     {
-        abort_if(FacadesGate::denies('cities-put-delete') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
+        // abort_if(FacadesGate::denies('profucts-put-delete') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
 
         $product->delete();
 
