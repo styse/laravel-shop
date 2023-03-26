@@ -3,20 +3,13 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProviderPostRequest;
-use App\Http\Requests\ProviderUpdateRequest;
+use App\Http\Requests\UpdateProviderRequest;
+use App\Http\Requests\StoreProviderRequest;
 use App\Http\Resources\ProviderResource;
-use App\Http\Resources\CampusResource;
-use App\Http\Resources\BrandResource;
 use App\Models\Provider;
-use App\Models\Campus;
-use App\Models\Brand;
-use App\Models\Representative;
-use App\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mime\Part\Multipart\FormDataPart;
 use Illuminate\Support\Facades\Gate as FacadesGate;
 
 class ProvidersController extends Controller
@@ -52,11 +45,7 @@ class ProvidersController extends Controller
     {
         abort_if(FacadesGate::denies('providers-get'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ProviderResource(
-            Provider::join('members', 'providers.id', 'members.id')
-            ->join('users', 'members.id', 'users.id')
-            ->paginate()
-        );
+        return new ProviderResource(Provider::with([])->paginate());
     }
 
      /**
@@ -87,7 +76,7 @@ class ProvidersController extends Controller
      *      )
      *     )
      */
-    public function store(ProviderPostRequest $request)
+    public function store(StoreProviderRequest $request)
     {
         abort_if(FacadesGate::denies('providers-post'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -132,12 +121,9 @@ class ProvidersController extends Controller
      */
     public function show(int $id)
     {
-        abort_if(FacadesGate::denies('providers-get'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(FacadesGate::denies('providers-get'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $provider = Provider::where('providers.id', $id)
-        ->join('members', 'providers.id', 'members.id')
-        ->join('users', 'members.id', 'users.id')
-        ->first();
+        $provider = Provider::findOrfail($id);
 
         return new ProviderResource($provider);
     }
@@ -186,9 +172,9 @@ class ProvidersController extends Controller
      *      )
      * )
      */
-    public function update(ProviderUpdateRequest $request, string $id)
+    public function update(UpdateProviderRequest $request, int $id)
     {
-        abort_if(FacadesGate::denies('providers-put-delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(FacadesGate::denies('providers-put-delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $provider = Provider::findOrFail($id);
         $provider->update($request->all());
@@ -236,55 +222,11 @@ class ProvidersController extends Controller
     public function destroy(Provider $provider)
     {
         
-        abort_if(FacadesGate::denies('providers-put-delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(FacadesGate::denies('providers-put-delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $provider->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
-    }
-
-
-    /**
-     * @OA\Get(
-     *      path="/api/v1/providers/{id}/products",
-     *      operationId="getProvidersProducts",
-     *      tags={"Providers"},
-     *      summary="Returns list of products",
-     *      description="Retreives record from database",
-     *      @OA\Parameter(
-     *          name="id",
-     *          in="path",
-     *          description="id of the provider which is asked for",
-     *          required=true,
-     *          @OA\Schema(
-     *              type="string",
-     *              format="string"
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Brand")
-     *       ),
-     *      @OA\Response(
-     *          response=401,
-     *          description="Unauthenticated",
-     *      ),
-     *      @OA\Response(
-     *          response=403,
-     *          description="Forbidden"
-     *      )
-     *     )
-     */
-
-    public function getProducts(int $id)
-    {
-        abort_if(FacadesGate::denies('products-get-by-provider') , Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $products = Product::where('provider_id', $id)->paginate();
-
-        return new BrandResource($products);
-
     }
 
 }
