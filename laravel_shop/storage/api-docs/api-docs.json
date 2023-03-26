@@ -15,6 +15,204 @@
         }
     ],
     "paths": {
+        "/api/v1/brands": {
+            "get": {
+                "tags": [
+                    "Brands"
+                ],
+                "summary": "Get list of brands",
+                "description": "Returns list of brands",
+                "operationId": "getBrands",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Brand"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Brands"
+                ],
+                "summary": "Stores a new brand",
+                "description": "Stores record in the database",
+                "operationId": "insertBrand",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Brand"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Brand"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/v1/categoris/{id}": {
+            "get": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Returns a single brand",
+                "description": "Retreives record from database",
+                "operationId": "getBrand",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the brand which is asked for",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Brand"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/v1/brands/{id}": {
+            "put": {
+                "tags": [
+                    "Brands"
+                ],
+                "summary": "Updates a single brand",
+                "description": "Updates a record in database",
+                "operationId": "12ce9e080b669657b98e405aa828e142",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Brand's id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Brand"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Brand"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Delete Existing Brand",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteBrand",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Brand's id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
         "/api/v1/categories": {
             "get": {
                 "tags": [
@@ -81,10 +279,10 @@
                 }
             }
         },
-        "/api/v1/categoris/{id}": {
+        "/api/v1/categories/{id}": {
             "get": {
                 "tags": [
-                    "Category"
+                    "Categories"
                 ],
                 "summary": "Returns a single category",
                 "description": "Retreives record from database",
@@ -119,9 +317,7 @@
                         "description": "Forbidden"
                     }
                 }
-            }
-        },
-        "/api/v1/categories/{id}": {
+            },
             "put": {
                 "tags": [
                     "Categories"
@@ -844,6 +1040,36 @@
     },
     "components": {
         "schemas": {
+            "Brand": {
+                "title": "Brand",
+                "description": "Brand Model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID of the brand",
+                        "type": "integer",
+                        "format": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the brand",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Asus"
+                    },
+                    "slug": {
+                        "title": "Slug",
+                        "description": "slug of the brand",
+                        "type": "string",
+                        "example": "asus-laptops-23t45tge5674ewedfk"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Brand"
+                }
+            },
             "Category": {
                 "title": "Category",
                 "description": "Category Model",
