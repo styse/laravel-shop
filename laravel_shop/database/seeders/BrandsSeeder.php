@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class BrandSeeder extends Seeder
+class BrandsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,6 +20,6 @@ class BrandSeeder extends Seeder
         ];
 
         foreach ($items as $item)
-            DB::table('products')->insert($item);
+            DB::table('brands')->insert($item);
     }
 }
