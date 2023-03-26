@@ -29,7 +29,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = ['id', 'name', 'phone', 'password', 'remember_token', 'api_token', 'type'];
+    protected $fillable = ['id', 'name', 'phone', 'password', 'remember_token', 'api_token'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -107,15 +107,4 @@ class User extends Authenticatable
      */
     public $api_token;
 
-    /**
-     * @OA\Property(
-     *     title="Type",
-     *     description="User type which defines permissions",
-     *     format="string",
-     *     example="administrator"
-     * )
-     *
-     * @var string
-     */
-    public $type;
 }
