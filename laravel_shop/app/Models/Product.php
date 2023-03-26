@@ -58,7 +58,7 @@ class Product extends Model
     /**
      * @OA\Property(
      *      title="Slug",
-     *      description="slug for a product",
+     *      description="slug of the product",
      *      example="asuse-laptop-274h8fk"
      * )
      *

@@ -847,6 +847,29 @@
             "Category": {
                 "title": "Category",
                 "description": "Category Model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID of the category",
+                        "type": "integer",
+                        "format": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the category",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Laptops"
+                    },
+                    "slug": {
+                        "title": "Slug",
+                        "description": "slug of the category",
+                        "type": "string",
+                        "example": "laptops-27ewfjkl4h8fk"
+                    }
+                },
+                "type": "object",
                 "xml": {
                     "name": "Category"
                 }
@@ -991,7 +1014,7 @@
                     },
                     "slug": {
                         "title": "Slug",
-                        "description": "slug for a product",
+                        "description": "slug of the product",
                         "type": "string",
                         "example": "asuse-laptop-274h8fk"
                     },
@@ -1027,7 +1050,7 @@
                     },
                     "slug": {
                         "title": "Slug",
-                        "description": "slug for a provider",
+                        "description": "slug of the provider",
                         "type": "string",
                         "example": "asuse-laptop-274h8fk"
                     },
@@ -1110,7 +1133,7 @@
                         "description": "Fullname of the user",
                         "type": "string",
                         "format": "string",
-                        "example": "Mohammad R. Tayyebi"
+                        "example": "Jane Doe"
                     },
                     "password": {
                         "title": "Password",

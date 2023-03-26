@@ -76,7 +76,7 @@ class User extends Authenticatable
      *     title="Name",
      *     description="Fullname of the user",
      *     format="string",
-     *     example="Mohammad R. Tayyebi"
+     *     example="Jane Doe"
      * )
      *
      * @var string

@@ -48,7 +48,7 @@ class Provider extends Model
     /**
      * @OA\Property(
      *      title="Slug",
-     *      description="slug for a provider",
+     *      description="slug of the provider",
      *      example="asuse-laptop-274h8fk"
      * )
      *
