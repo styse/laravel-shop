@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
-class UsersTableSeeder extends Seeder
+class UsersSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,11 +15,11 @@ class UsersTableSeeder extends Seeder
     {
         \App\Models\User::factory(10)->create();
 
-        \App\Models\User::factory()->create([
+        \App\Models\User::create([
             'name' => 'Test User',
             'email' => 'test@example.com',
             'phone_number' => '+9812345678',
-
+            'password'=>Hash::make(Str::random(100)),
         ]);
     }
 }
