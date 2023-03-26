@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Str;
 
-class UsersController extends Controller
+class usersController extends Controller
 {
     /**
      * @OA\Post(
