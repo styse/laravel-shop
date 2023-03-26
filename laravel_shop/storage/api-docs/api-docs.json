@@ -891,7 +891,7 @@
                         "description": "Login of the user",
                         "type": "string",
                         "format": "string",
-                        "example": "000"
+                        "example": "1234567890"
                     },
                     "password": {
                         "title": "Password",
@@ -1058,14 +1058,14 @@
                         "description": "Phone number of user",
                         "type": "string",
                         "format": "string",
-                        "example": "+989388063351"
+                        "example": "+9812345678"
                     },
                     "name": {
                         "title": "Name",
                         "description": "Fullname of the user",
                         "type": "string",
                         "format": "string",
-                        "example": "Mohammad R. Tayyebi"
+                        "example": "John Doe"
                     },
                     "password": {
                         "title": "Password",
@@ -1125,13 +1125,6 @@
                         "type": "string",
                         "format": "string",
                         "example": "aabbcc112233"
-                    },
-                    "type": {
-                        "title": "Type",
-                        "description": "User type which defines permissions",
-                        "type": "string",
-                        "format": "string",
-                        "example": "administrator"
                     }
                 },
                 "type": "object",
