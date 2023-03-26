@@ -2,8 +2,8 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductPostRequest;
-use App\Http\Requests\ProductUpdateRequest;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Symfony\Component\HttpFoundation\Response;
@@ -77,7 +77,7 @@ class ProductsController extends Controller
      *      )
      *     )
      */
-    public function store(ProductPostRequest $request)
+    public function store(StoreProductRequest $request)
     {
         // abort_if(FacadesGate::denies('products-post') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
 
@@ -175,7 +175,7 @@ class ProductsController extends Controller
      *      )
      * )
      */
-    public function update(ProductUpdateRequest $request, string $id)
+    public function update(UpdateProductRequest $request, string $id)
     {
         abort_if(FacadesGate::denies('products-put-delete') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
 
