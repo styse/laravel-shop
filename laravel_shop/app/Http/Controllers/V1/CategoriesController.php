@@ -92,9 +92,9 @@ class CategoriesController extends Controller
     
     /**
      * @OA\Get(
-     *      path="/api/v1/categoris/{id}",
+     *      path="/api/v1/categories/{id}",
      *      operationId="getCategory",
-     *      tags={"Category"},
+     *      tags={"Categories"},
      *      summary="Returns a single category",
      *      description="Retreives record from database",
      *      @OA\Parameter(
