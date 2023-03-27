@@ -17,12 +17,12 @@ use Illuminate\Database\Eloquent\Model;
 class Login extends Model
 {
     use HasFactory;
-    protected $fillable = ['phone', 'password', 'generate_new_api_key', 'type'];
+    protected $fillable = ['phone_number', 'password', 'generate_new_api_token', 'type'];
 
 
      /** 
      * @OA\Property(
-     *     title="Phone",
+     *     title="Phone number",
      *     description="Login of the user",
      *     format="string",
      *     example="1234567890"
@@ -30,7 +30,7 @@ class Login extends Model
      *
      * @var string
      */
-    private $phone;
+    private $phone_number;
 
     /** 
      * @OA\Property(
@@ -54,18 +54,7 @@ class Login extends Model
      *
      * @var boolean
      */
-    private $generate_new_api_key;
-    
-    /** 
-     * @OA\Property(
-     *     title="Type",
-     *     description="The user type",
-     *     format="string",
-     *     example="administrator"
-     * )
-     *
-     * @var string
-     */
-    private $type;
+    private $generate_new_api_token;
+
 
 }
