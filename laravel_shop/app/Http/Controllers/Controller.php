@@ -47,7 +47,7 @@ use Illuminate\Routing\Controller as BaseController;
  * )
  * 
  * @OA\Tag(
- *     name="Geo",
+ *     name="Comments",
  *     description="v1"
  * )
  * 
