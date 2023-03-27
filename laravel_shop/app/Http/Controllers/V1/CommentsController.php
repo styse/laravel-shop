@@ -90,9 +90,9 @@ class CommentsController extends Controller
     
     /**
      * @OA\Get(
-     *      path="/api/v1/categoris/{id}",
+     *      path="/api/v1/comments/{id}",
      *      operationId="getComment",
-     *      tags={"Comment"},
+     *      tags={"Comments"},
      *      summary="Returns a single comment",
      *      description="Retreives record from database",
      *      @OA\Parameter(
@@ -192,7 +192,7 @@ class CommentsController extends Controller
      * @OA\Delete(
      *      path="/api/v1/comments/{id}",
      *      operationId="deleteComment",
-     *      tags={"Comment"},
+     *      tags={"Comments"},
      *      summary="Delete Existing Comment",
      *      description="Deletes a record and returns no content",
      *      @OA\Parameter(
