@@ -50,21 +50,19 @@ class usersController extends Controller
     public function login(UserLoginRequest $request)
     {
         // Login
-        $login = User::where('phone', $request->phone)->first();
-        $login->type = 'administrator'; // todo: dynamically set this variable
+        $login = User::where('phone_number', $request->phone_number)->first();
         if (!$login)
             abort(403, 'Invalid login');
         $success = Hash::check($request->password, $login['password']);
 
         // Initiate result
         $loginResult = new LoginResult();
-        $loginResult->username = $request->phone;
+        $loginResult->username = $request->phone_number;
         $loginResult->success = $success;
         $loginResult->user_id = $login->id;
-        $loginResult->type = $login->type;
         
         // Generate token
-        $token = $request->generate_new_api_key ? Str::random(32) : false;
+        $token = $request->generate_new_api_token ? Str::random(32) : false;
 
         if ($success)
         {
