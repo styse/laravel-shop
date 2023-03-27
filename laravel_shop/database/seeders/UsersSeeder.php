@@ -13,13 +13,15 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory(10)->create();
+        // \App\Models\User::factory(10)->create();
 
         \App\Models\User::create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'phone_number' => '+9812345678',
             'password'=>Hash::make(Str::random(100)),
+            'phone_number' => '+981234567',
+            'api_token' => Str::random(10),
+            'remember_token' => Str::random(32),
         ]);
     }
 }
