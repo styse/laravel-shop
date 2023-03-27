@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('name');
             // $table->string('Specifications'); //TODO
             $table->integer('price');
+            $table->foreignId('brand_id')->nullable()->unsigned()
+            ->references('id')
+            ->on('brands');
             $table->string('description');
             $table->string('slug')->unique();
             $table->boolean('stock')->default(TRUE);
