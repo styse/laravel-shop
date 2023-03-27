@@ -22,10 +22,10 @@ class Register extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $primaryKey = 'phone';
+    protected $primaryKey = 'phone_number';
     public $incrementing = false;
     public function getKeyName(){
-        return 'phone';
+        return 'phone_number';
     }
 
     /**
@@ -33,7 +33,7 @@ class Register extends Model
      *
      * @var array<int,string>
      */
-    protected $fillable = ['name', 'phone', 'password', 'remember_token', 'api_token'];
+    protected $fillable = ['name', 'email', 'password', 'phone_number', 'api_token', 'remember_token'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -42,18 +42,29 @@ class Register extends Model
      */
     protected $hidden = ['password', 'remember_token', 'api_token'];
 
+    /** 
+     * @OA\Property(
+     *     title="Email",
+     *     description="Email of the user",
+     *     format="string",
+     *     example="styse011@gmail.com"
+     * )
+     *
+     * @var string
+     */
+    public $email;
 
     /** 
      * @OA\Property(
-     *     title="Phone",
-     *     description="Phone number of user",
+     *     title="Phone number",
+     *     description="Phone number of the user",
      *     format="string",
      *     example="+9812345678"
      * )
      *
      * @var string
      */
-    public $phone;
+    public $phone_number;
 
     /** 
      * @OA\Property(
