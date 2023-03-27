@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 class LoginResult extends Model
 {
     use HasFactory;
-    protected $fillable = ['username', 'api_key', 'success', 'type', 'user_id'];
+    protected $fillable = ['username', 'api_key', 'success', 'user_id'];
 
 
      /** 
@@ -55,18 +55,6 @@ class LoginResult extends Model
      * @var boolean
      */
     private $success;
-
-    /** 
-     * @OA\Property(
-     *     title="Type",
-     *     description="The user type",
-     *     format="string",
-     *     example="administrator"
-     * )
-     *
-     * @var string
-     */
-    private $type;
 
     /** 
      * @OA\Property(
