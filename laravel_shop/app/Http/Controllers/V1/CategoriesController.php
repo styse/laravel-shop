@@ -194,7 +194,7 @@ class CategoriesController extends Controller
      * @OA\Delete(
      *      path="/api/v1/categories/{id}",
      *      operationId="deleteCategory",
-     *      tags={"Category"},
+     *      tags={"Categories"},
      *      summary="Delete Existing Category",
      *      description="Deletes a record and returns no content",
      *      @OA\Parameter(

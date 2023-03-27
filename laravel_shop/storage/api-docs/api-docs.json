@@ -370,7 +370,7 @@
             },
             "delete": {
                 "tags": [
-                    "Category"
+                    "Categories"
                 ],
                 "summary": "Delete Existing Category",
                 "description": "Deletes a record and returns no content",
@@ -476,7 +476,7 @@
         "/api/v1/comments/{id}": {
             "get": {
                 "tags": [
-                    "Comment"
+                    "Comments"
                 ],
                 "summary": "Returns a single comment",
                 "description": "Retreives record from database",
@@ -566,7 +566,7 @@
             },
             "delete": {
                 "tags": [
-                    "Comment"
+                    "Comments"
                 ],
                 "summary": "Delete Existing Comment",
                 "description": "Deletes a record and returns no content",
