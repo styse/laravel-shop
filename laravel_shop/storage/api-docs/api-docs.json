@@ -81,10 +81,10 @@
                 }
             }
         },
-        "/api/v1/categoris/{id}": {
+        "/api/v1/brands/{id}": {
             "get": {
                 "tags": [
-                    "Brand"
+                    "Brands"
                 ],
                 "summary": "Returns a single brand",
                 "description": "Retreives record from database",
@@ -119,9 +119,7 @@
                         "description": "Forbidden"
                     }
                 }
-            }
-        },
-        "/api/v1/brands/{id}": {
+            },
             "put": {
                 "tags": [
                     "Brands"
@@ -176,7 +174,7 @@
             },
             "delete": {
                 "tags": [
-                    "Brand"
+                    "Brands"
                 ],
                 "summary": "Delete Existing Brand",
                 "description": "Deletes a record and returns no content",
@@ -382,6 +380,202 @@
                         "name": "id",
                         "in": "path",
                         "description": "Category's id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/v1/comments": {
+            "get": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Get list of comments",
+                "description": "Returns list of comments",
+                "operationId": "getComments",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Comment"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Stores a new comment",
+                "description": "Stores record in the database",
+                "operationId": "insertComment",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Comment"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Comment"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/v1/comments/{id}": {
+            "get": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Returns a single comment",
+                "description": "Retreives record from database",
+                "operationId": "getComment",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the comment which is asked for",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Comment"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Updates a single comment",
+                "description": "Updates a record in database",
+                "operationId": "b2eb5bc7787842af2c1f168c967da67c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Comment's id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Comment"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Comment"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Delete Existing Comment",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteComment",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Comment's id",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -1131,12 +1325,42 @@
                     "name": "ChangePassword"
                 }
             },
+            "Comment": {
+                "title": "Comment",
+                "description": "Comment Model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID of the comment",
+                        "type": "integer",
+                        "format": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "title": "Title",
+                        "description": "Title of the comment",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Ziba bood"
+                    },
+                    "content": {
+                        "title": "Content",
+                        "description": "content of the comment",
+                        "type": "string",
+                        "example": "Ipsum quis aute amet dolore laboris \n     *      Lorem nulla Lorem consequat labore aliqua \n     *      excepteur cupidatat."
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Comment"
+                }
+            },
             "Login": {
                 "title": "Login",
                 "description": "Login Model",
                 "properties": {
-                    "phone": {
-                        "title": "Phone",
+                    "phone_number": {
+                        "title": "Phone number",
                         "description": "Login of the user",
                         "type": "string",
                         "format": "string",
@@ -1149,19 +1373,12 @@
                         "format": "string",
                         "example": "***"
                     },
-                    "generate_new_api_key": {
+                    "generate_new_api_token": {
                         "title": "Generate new API key",
                         "description": "To allow API to generate a new session",
                         "type": "boolean",
                         "format": "boolean",
                         "example": false
-                    },
-                    "type": {
-                        "title": "Type",
-                        "description": "The user type",
-                        "type": "string",
-                        "format": "string",
-                        "example": "administrator"
                     }
                 },
                 "type": "object",
@@ -1193,13 +1410,6 @@
                         "type": "boolean",
                         "format": "boolean",
                         "example": false
-                    },
-                    "type": {
-                        "title": "Type",
-                        "description": "The user type",
-                        "type": "string",
-                        "format": "string",
-                        "example": "administrator"
                     },
                     "user_id": {
                         "title": "ID",
@@ -1302,9 +1512,16 @@
                 "title": "Register",
                 "description": "Register Model",
                 "properties": {
-                    "phone": {
-                        "title": "Phone",
-                        "description": "Phone number of user",
+                    "email": {
+                        "title": "Email",
+                        "description": "Email of the user",
+                        "type": "string",
+                        "format": "string",
+                        "example": "styse011@gmail.com"
+                    },
+                    "phone_number": {
+                        "title": "Phone number",
+                        "description": "Phone number of the user",
                         "type": "string",
                         "format": "string",
                         "example": "+9812345678"
@@ -1413,7 +1630,7 @@
             "description": "v1"
         },
         {
-            "name": "Geo",
+            "name": "Comments",
             "description": "v1"
         }
     ],
