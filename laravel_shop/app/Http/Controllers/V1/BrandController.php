@@ -89,9 +89,9 @@ class BrandController extends Controller
     
     /**
      * @OA\Get(
-     *      path="/api/v1/categoris/{id}",
+     *      path="/api/v1/brands/{id}",
      *      operationId="getBrand",
-     *      tags={"Brand"},
+     *      tags={"Brands"},
      *      summary="Returns a single brand",
      *      description="Retreives record from database",
      *      @OA\Parameter(
@@ -191,7 +191,7 @@ class BrandController extends Controller
      * @OA\Delete(
      *      path="/api/v1/brands/{id}",
      *      operationId="deleteBrand",
-     *      tags={"Brand"},
+     *      tags={"Brands"},
      *      summary="Delete Existing Brand",
      *      description="Deletes a record and returns no content",
      *      @OA\Parameter(
