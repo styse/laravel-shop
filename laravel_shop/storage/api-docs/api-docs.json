@@ -1610,11 +1610,11 @@
     },
     "tags": [
         {
-            "name": "Providers",
+            "name": "Users",
             "description": "v1"
         },
         {
-            "name": "Users",
+            "name": "Providers",
             "description": "v1"
         },
         {

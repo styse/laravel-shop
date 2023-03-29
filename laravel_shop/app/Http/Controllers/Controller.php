@@ -22,12 +22,12 @@ use Illuminate\Routing\Controller as BaseController;
  * 
  * 
  * @OA\Tag(
- *     name="Providers",
+ *     name="Users",
  *     description="v1"
  * )
  * 
  * @OA\Tag(
- *     name="Users",
+ *     name="Providers",
  *     description="v1"
  * )
  * 
