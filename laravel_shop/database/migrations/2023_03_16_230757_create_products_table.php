@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             // $table->string('Specifications'); //TODO
             $table->integer('price');
-            $table->foreignId('brand_id')->nullable()->unsigned()
+            $table->foreignId('brand_id')
             ->references('id')
             ->on('brands');
             $table->string('description');
