@@ -1442,6 +1442,20 @@
                         "format": "string",
                         "example": "asus laptop"
                     },
+                    "brand_id": {
+                        "title": "Brand_id",
+                        "description": "ID of the brand",
+                        "type": "integer",
+                        "format": "integer",
+                        "example": 1
+                    },
+                    "price": {
+                        "title": "Price",
+                        "description": "Price of the product",
+                        "type": "integer",
+                        "format": "integer",
+                        "example": 1
+                    },
                     "description": {
                         "title": "description",
                         "description": "products description",
