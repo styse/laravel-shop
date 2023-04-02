@@ -45,7 +45,10 @@ class productsController extends Controller
     {
         // abort_if(FacadesGate::denies('products-get'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ProductResource(Product::with([])->paginate());
+        return new ProductResource(
+        Product::join('brands', 'brand_id', 'brands.id')
+        ->select('products.*', 'brands.name as brand_name', 'brands.slug as brand_slug')
+        ->paginate());
     }
 
 
@@ -124,10 +127,12 @@ class productsController extends Controller
     public function show(int $id)
     {
         // abort_if(FacadesGate::denies('products-get') , Response::HTTP_FORBIDDEN, '403 Forbidden');
-        
-        $product = Product::findOrFail($id);
 
-        return new ProductResource($product);
+            return new ProductResource(Product::where('products.id', $id)
+            ->join('brands', 'brand_id', 'brands.id')
+            ->select('products.*', 'brands.name as brand_name', 'brands.slug as brand_slug')
+            ->get()
+        );
     }
 
     
