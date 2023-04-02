@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable = ['id', 'name', 'description', 'slug' , 'stock'];
+    protected $fillable = ['id', 'name', 'price', 'brand_id', 'description', 'slug' , 'stock'];
 
     
     /** 
@@ -43,6 +43,33 @@ class Product extends Model
      * @var string
      */
     private $name;
+
+            
+    /** 
+     * @OA\Property(
+     *     title="Brand_id",
+     *     description="ID of the brand",
+     *     format="integer",
+     *     example=1
+     * )
+     *
+     * @var integer
+     */
+    private $brand_id;
+
+        
+    /** 
+     * @OA\Property(
+     *     title="Price",
+     *     description="Price of the product",
+     *     format="integer",
+     *     example=1
+     * )
+     *
+     * @var integer
+     */
+    private $price;
+
 
     /**
      * @OA\Property(
