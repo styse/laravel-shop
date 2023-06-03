@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Http\Controllers\V1;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateProviderRequest;
-use App\Http\Requests\StoreProviderRequest;
-use App\Http\Resources\ProviderResource;
-use App\Models\Provider;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Resources\CategoryResource;
+use App\Models\Category;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate as FacadesGate;
 
-class providersController extends Controller
+
+class CategoriesController extends Controller
 {
 
     /**
      * @OA\Get(
-     *      path="/api/v1/providers",
-     *      operationId="getProviders",
-     *      tags={"Providers"},
-     *      summary="Get list of providers",
-     *      description="Returns list of providers",
+     *      path="/api/v1/categories",
+     *      operationId="getCategories",
+     *      tags={"Categories"},
+     *      summary="Get list of categories",
+     *      description="Returns list of categories",
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Provider")
+     *          @OA\JsonContent(ref="#/components/schemas/Category")
      *       ),
      *      @OA\Response(
      *          response=401,
@@ -43,28 +43,29 @@ class providersController extends Controller
      */
     public function index()
     {
-        abort_if(FacadesGate::denies('providers-get'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(FacadesGate::denies('categories-get'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ProviderResource(Provider::with([])->paginate());
+        return new CategoryResource(Category::with([])->paginate());
     }
+
 
      /**
      * @OA\Post(
-     *      path="/api/v1/providers",
-     *      operationId="insertProvider",
-     *      tags={"Providers"},
-     *      summary="Stores a new provider",
+     *      path="/api/v1/categories",
+     *      operationId="insertCategory",
+     *      tags={"Categories"},
+     *      summary="Stores a new category",
      *      description="Stores record in the database",
      *      @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
-     *             @OA\Schema(ref="#/components/schemas/Provider")
+     *             @OA\Schema(ref="#/components/schemas/Category")
      *         )
      *     ),
      *      @OA\Response(
      *          response=201,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Provider")
+     *          @OA\JsonContent(ref="#/components/schemas/Category")
      *       ),
      *      @OA\Response(
      *          response=401,
@@ -76,28 +77,30 @@ class providersController extends Controller
      *      )
      *     )
      */
-    public function store(StoreProviderRequest $request)
+    public function store(StoreCategoryRequest $request)
     {
-        abort_if(FacadesGate::denies('providers-post'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(FacadesGate::denies('categories-post') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
 
-        $provider = Provider::create($request->all());
+        $Category = Category::create($request->all());
 
-        return (new ProviderResource($provider))
+        return (new CategoryResource($Category))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
+
+    
     /**
      * @OA\Get(
-     *      path="/api/v1/providers/{id}",
-     *      operationId="getProvider",
-     *      tags={"Providers"},
-     *      summary="Returns a single provider",
+     *      path="/api/v1/categories/{id}",
+     *      operationId="getCategory",
+     *      tags={"Categories"},
+     *      summary="Returns a single category",
      *      description="Retreives record from database",
      *      @OA\Parameter(
      *          name="id",
      *          in="path",
-     *          description="Id of the provider which is asked for",
+     *          description="Id of the category which is asked for",
      *          required=true,
      *          @OA\Schema(
      *              type="string",
@@ -107,7 +110,7 @@ class providersController extends Controller
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Provider")
+     *          @OA\JsonContent(ref="#/components/schemas/Category")
      *       ),
      *      @OA\Response(
      *          response=401,
@@ -121,22 +124,24 @@ class providersController extends Controller
      */
     public function show(int $id)
     {
-        // abort_if(FacadesGate::denies('providers-get'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(FacadesGate::denies('categories-get') , Response::HTTP_FORBIDDEN, '403 Forbidden');
+        
+        $category = Category::findOrFail($id);
 
-        $provider = Provider::findOrfail($id);
-
-        return new ProviderResource($provider);
+        return new CategoryResource($category);
     }
 
+
+    
     /**
      * @OA\Put(
-     *      path="/api/v1/providers/{id}",
-     *      tags={"Providers"},
-     *      summary="Updates a single provider",
+     *      path="/api/v1/categories/{id}",
+     *      tags={"Categories"},
+     *      summary="Updates a single category",
      *      description="Updates a record in database",
     *     @OA\Parameter(
     *          name="id",
-    *          description="Provider's id",
+    *          description="Category's id",
     *          required=true,
     *          in="path",
     *          @OA\Schema(
@@ -146,13 +151,13 @@ class providersController extends Controller
      *      @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="application/json",
-     *             @OA\Schema(ref="#/components/schemas/Provider")
+     *             @OA\Schema(ref="#/components/schemas/Category")
      *         )
      *     ),
      *      @OA\Response(
      *          response=202,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Provider")
+     *          @OA\JsonContent(ref="#/components/schemas/Category")
      *       ),
      *      @OA\Response(
      *          response=400,
@@ -172,28 +177,29 @@ class providersController extends Controller
      *      )
      * )
      */
-    public function update(UpdateProviderRequest $request, int $id)
+    public function update(UpdateCategoryRequest $request, string $id)
     {
-        // abort_if(FacadesGate::denies('providers-put-delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(FacadesGate::denies('category-put-delete') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
 
-        $provider = Provider::findOrFail($id);
-        $provider->update($request->all());
+        $category = Category::findOrFail($id);
+        $category->update($request->all());
 
-        return (new ProviderResource($provider))
+        return (new CategoryResource($category))
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
+    
     /**
      * @OA\Delete(
-     *      path="/api/v1/providers/{id}",
-     *      operationId="deleteProvider",
-     *      tags={"Providers"},
-     *      summary="Delete Existing Provider",
+     *      path="/api/v1/categories/{id}",
+     *      operationId="deleteCategory",
+     *      tags={"Categories"},
+     *      summary="Delete Existing Category",
      *      description="Deletes a record and returns no content",
      *      @OA\Parameter(
      *          name="id",
-     *          description="Provider's id",
+     *          description="Category's id",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -219,12 +225,11 @@ class providersController extends Controller
      *      )
      * )
      */
-    public function destroy(Provider $provider)
+    public function destroy(Category $category)
     {
-        
-        // abort_if(FacadesGate::denies('providers-put-delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(FacadesGate::denies('categories-put-delete') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
 
-        $provider->delete();
+        $category->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

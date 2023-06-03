@@ -1,31 +1,31 @@
 <?php
-namespace App\Http\Controllers\V1;
+
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
-use App\Http\Resources\ProductResource;
-use App\Models\Product;
+use App\Http\Requests\UpdateProviderRequest;
+use App\Http\Requests\StoreProviderRequest;
+use App\Http\Resources\ProviderResource;
+use App\Models\Provider;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Gate as FacadesGate;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;
 
-class productsController extends Controller
+class providersController extends Controller
 {
 
     /**
      * @OA\Get(
-     *      path="/api/v1/products",
-     *      operationId="getProducts",
-     *      tags={"Products"},
-     *      summary="Get list of products",
-     *      description="Returns list of products",
+     *      path="/api/v1/providers",
+     *      operationId="getProviders",
+     *      tags={"Providers"},
+     *      summary="Get list of providers",
+     *      description="Returns list of providers",
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Product")
+     *          @OA\JsonContent(ref="#/components/schemas/Provider")
      *       ),
      *      @OA\Response(
      *          response=401,
@@ -43,32 +43,28 @@ class productsController extends Controller
      */
     public function index()
     {
-        // abort_if(FacadesGate::denies('products-get'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(FacadesGate::denies('providers-get'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ProductResource(
-        Product::join('brands', 'brand_id', 'brands.id')
-        ->select('products.*', 'brands.name as brand_name', 'brands.slug as brand_slug')
-        ->paginate());
+        return new ProviderResource(Provider::with([])->paginate());
     }
-
 
      /**
      * @OA\Post(
-     *      path="/api/v1/products",
-     *      operationId="insertProduct",
-     *      tags={"Products"},
-     *      summary="Stores a new Product",
+     *      path="/api/v1/providers",
+     *      operationId="insertProvider",
+     *      tags={"Providers"},
+     *      summary="Stores a new provider",
      *      description="Stores record in the database",
      *      @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
-     *             @OA\Schema(ref="#/components/schemas/Product")
+     *             @OA\Schema(ref="#/components/schemas/Provider")
      *         )
      *     ),
      *      @OA\Response(
      *          response=201,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Product")
+     *          @OA\JsonContent(ref="#/components/schemas/Provider")
      *       ),
      *      @OA\Response(
      *          response=401,
@@ -80,29 +76,28 @@ class productsController extends Controller
      *      )
      *     )
      */
-    public function store(StoreProductRequest $request)
+    public function store(StoreProviderRequest $request)
     {
-        // abort_if(FacadesGate::denies('products-post') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
+        abort_if(FacadesGate::denies('providers-post'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product = Product::create($request->all());
+        $provider = Provider::create($request->all());
 
-        return (new ProductResource($product))
+        return (new ProviderResource($provider))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    
     /**
      * @OA\Get(
-     *      path="/api/v1/products/{id}",
-     *      operationId="getProduct",
-     *      tags={"Products"},
-     *      summary="Returns a single product",
+     *      path="/api/v1/providers/{id}",
+     *      operationId="getProvider",
+     *      tags={"Providers"},
+     *      summary="Returns a single provider",
      *      description="Retreives record from database",
      *      @OA\Parameter(
      *          name="id",
      *          in="path",
-     *          description="Id of the product which is asked for",
+     *          description="Id of the provider which is asked for",
      *          required=true,
      *          @OA\Schema(
      *              type="string",
@@ -112,7 +107,7 @@ class productsController extends Controller
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Product")
+     *          @OA\JsonContent(ref="#/components/schemas/Provider")
      *       ),
      *      @OA\Response(
      *          response=401,
@@ -126,25 +121,22 @@ class productsController extends Controller
      */
     public function show(int $id)
     {
-        // abort_if(FacadesGate::denies('products-get') , Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(FacadesGate::denies('providers-get'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            return new ProductResource(Product::where('products.id', $id)
-            ->join('brands', 'brand_id', 'brands.id')
-            ->select('products.*', 'brands.name as brand_name', 'brands.slug as brand_slug')
-            ->get()
-        );
+        $provider = Provider::findOrfail($id);
+
+        return new ProviderResource($provider);
     }
 
-    
     /**
      * @OA\Put(
-     *      path="/api/v1/products/{id}",
-     *      tags={"Products"},
-     *      summary="Updates a single product",
+     *      path="/api/v1/providers/{id}",
+     *      tags={"Providers"},
+     *      summary="Updates a single provider",
      *      description="Updates a record in database",
     *     @OA\Parameter(
     *          name="id",
-    *          description="Product's id",
+    *          description="Provider's id",
     *          required=true,
     *          in="path",
     *          @OA\Schema(
@@ -154,13 +146,13 @@ class productsController extends Controller
      *      @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="application/json",
-     *             @OA\Schema(ref="#/components/schemas/Product")
+     *             @OA\Schema(ref="#/components/schemas/Provider")
      *         )
      *     ),
      *      @OA\Response(
      *          response=202,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Product")
+     *          @OA\JsonContent(ref="#/components/schemas/Provider")
      *       ),
      *      @OA\Response(
      *          response=400,
@@ -180,30 +172,28 @@ class productsController extends Controller
      *      )
      * )
      */
-    public function update(UpdateProductRequest $request, string $id)
+    public function update(UpdateProviderRequest $request, int $id)
     {
-        abort_if(FacadesGate::denies('products-put-delete') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
+        // abort_if(FacadesGate::denies('providers-put-delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product = Product::findOrFail($id);
-        $product->update($request->all());
+        $provider = Provider::findOrFail($id);
+        $provider->update($request->all());
 
-        return (new ProductResource($product))
+        return (new ProviderResource($provider))
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-
-    
     /**
      * @OA\Delete(
-     *      path="/api/v1/products/{id}",
-     *      operationId="deleteProduct",
-     *      tags={"Products"},
-     *      summary="Delete Existing Product",
+     *      path="/api/v1/providers/{id}",
+     *      operationId="deleteProvider",
+     *      tags={"Providers"},
+     *      summary="Delete Existing Provider",
      *      description="Deletes a record and returns no content",
      *      @OA\Parameter(
      *          name="id",
-     *          description="Product's id",
+     *          description="Provider's id",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -229,14 +219,14 @@ class productsController extends Controller
      *      )
      * )
      */
-    public function destroy(Product $product)
+    public function destroy(Provider $provider)
     {
-        // abort_if(FacadesGate::denies('profucts-put-delete') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
+        
+        // abort_if(FacadesGate::denies('providers-put-delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product->delete();
+        $provider->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 
 }

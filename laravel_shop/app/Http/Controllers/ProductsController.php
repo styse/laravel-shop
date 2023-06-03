@@ -1,29 +1,31 @@
 <?php
-
-namespace App\Http\Controllers\V1;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCommentRequest;
-use App\Http\Requests\UpdateCommentRequest;
-use App\Http\Resources\CommentResource;
-use App\Models\Comment;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\ProductResource;
+use App\Models\Product;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Gate as FacadesGate;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
-class CommentsController extends Controller
+class productsController extends Controller
 {
 
     /**
      * @OA\Get(
-     *      path="/api/v1/comments",
-     *      operationId="getComments",
-     *      tags={"Comments"},
-     *      summary="Get list of comments",
-     *      description="Returns list of comments",
+     *      path="/api/v1/products",
+     *      operationId="getProducts",
+     *      tags={"Products"},
+     *      summary="Get list of products",
+     *      description="Returns list of products",
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Comment")
+     *          @OA\JsonContent(ref="#/components/schemas/Product")
      *       ),
      *      @OA\Response(
      *          response=401,
@@ -41,29 +43,32 @@ class CommentsController extends Controller
      */
     public function index()
     {
-        // abort_if(FacadesGate::denies('comments-get'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(FacadesGate::denies('products-get'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new CommentResource(Comment::with([])->paginate());
+        return new ProductResource(
+        Product::join('brands', 'brand_id', 'brands.id')
+        ->select('products.*', 'brands.name as brand_name', 'brands.slug as brand_slug')
+        ->paginate());
     }
 
 
      /**
      * @OA\Post(
-     *      path="/api/v1/comments",
-     *      operationId="insertComment",
-     *      tags={"Comments"},
-     *      summary="Stores a new comment",
+     *      path="/api/v1/products",
+     *      operationId="insertProduct",
+     *      tags={"Products"},
+     *      summary="Stores a new Product",
      *      description="Stores record in the database",
      *      @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
-     *             @OA\Schema(ref="#/components/schemas/Comment")
+     *             @OA\Schema(ref="#/components/schemas/Product")
      *         )
      *     ),
      *      @OA\Response(
      *          response=201,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Comment")
+     *          @OA\JsonContent(ref="#/components/schemas/Product")
      *       ),
      *      @OA\Response(
      *          response=401,
@@ -75,30 +80,29 @@ class CommentsController extends Controller
      *      )
      *     )
      */
-    public function store(StoreCommentRequest $request)
+    public function store(StoreProductRequest $request)
     {
-        // abort_if(FacadesGate::denies('comments-post') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
+        // abort_if(FacadesGate::denies('products-post') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
 
-        $Comment = Comment::create($request->all());
+        $product = Product::create($request->all());
 
-        return (new CommentResource($Comment))
+        return (new ProductResource($product))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-
     
     /**
      * @OA\Get(
-     *      path="/api/v1/comments/{id}",
-     *      operationId="getComment",
-     *      tags={"Comments"},
-     *      summary="Returns a single comment",
+     *      path="/api/v1/products/{id}",
+     *      operationId="getProduct",
+     *      tags={"Products"},
+     *      summary="Returns a single product",
      *      description="Retreives record from database",
      *      @OA\Parameter(
      *          name="id",
      *          in="path",
-     *          description="Id of the comment which is asked for",
+     *          description="Id of the product which is asked for",
      *          required=true,
      *          @OA\Schema(
      *              type="string",
@@ -108,7 +112,7 @@ class CommentsController extends Controller
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Comment")
+     *          @OA\JsonContent(ref="#/components/schemas/Product")
      *       ),
      *      @OA\Response(
      *          response=401,
@@ -122,24 +126,25 @@ class CommentsController extends Controller
      */
     public function show(int $id)
     {
-        // abort_if(FacadesGate::denies('comments-get') , Response::HTTP_FORBIDDEN, '403 Forbidden');
-        
-        $comment = Comment::findOrFail($id);
+        // abort_if(FacadesGate::denies('products-get') , Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new CommentResource($comment);
+            return new ProductResource(Product::where('products.id', $id)
+            ->join('brands', 'brand_id', 'brands.id')
+            ->select('products.*', 'brands.name as brand_name', 'brands.slug as brand_slug')
+            ->get()
+        );
     }
-
 
     
     /**
      * @OA\Put(
-     *      path="/api/v1/comments/{id}",
-     *      tags={"Comments"},
-     *      summary="Updates a single comment",
+     *      path="/api/v1/products/{id}",
+     *      tags={"Products"},
+     *      summary="Updates a single product",
      *      description="Updates a record in database",
     *     @OA\Parameter(
     *          name="id",
-    *          description="Comment's id",
+    *          description="Product's id",
     *          required=true,
     *          in="path",
     *          @OA\Schema(
@@ -149,13 +154,13 @@ class CommentsController extends Controller
      *      @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="application/json",
-     *             @OA\Schema(ref="#/components/schemas/Comment")
+     *             @OA\Schema(ref="#/components/schemas/Product")
      *         )
      *     ),
      *      @OA\Response(
      *          response=202,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Comment")
+     *          @OA\JsonContent(ref="#/components/schemas/Product")
      *       ),
      *      @OA\Response(
      *          response=400,
@@ -175,29 +180,30 @@ class CommentsController extends Controller
      *      )
      * )
      */
-    public function update(UpdateCommentRequest $request, string $id)
+    public function update(UpdateProductRequest $request, string $id)
     {
-        // abort_if(FacadesGate::denies('comments-put-delete') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
+        abort_if(FacadesGate::denies('products-put-delete') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
 
-        $comment = Comment::findOrFail($id);
-        $comment->update($request->all());
+        $product = Product::findOrFail($id);
+        $product->update($request->all());
 
-        return (new CommentResource($comment))
+        return (new ProductResource($product))
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
+
     
     /**
      * @OA\Delete(
-     *      path="/api/v1/comments/{id}",
-     *      operationId="deleteComment",
-     *      tags={"Comments"},
-     *      summary="Delete Existing Comment",
+     *      path="/api/v1/products/{id}",
+     *      operationId="deleteProduct",
+     *      tags={"Products"},
+     *      summary="Delete Existing Product",
      *      description="Deletes a record and returns no content",
      *      @OA\Parameter(
      *          name="id",
-     *          description="Comment's id",
+     *          description="Product's id",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -223,12 +229,14 @@ class CommentsController extends Controller
      *      )
      * )
      */
-    public function destroy(Comment $comment)
+    public function destroy(Product $product)
     {
-        // abort_if(FacadesGate::denies('comments-put-delete') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
+        // abort_if(FacadesGate::denies('profucts-put-delete') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
 
-        $comment->delete();
+        $product->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+
 }

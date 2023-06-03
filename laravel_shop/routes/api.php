@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'prefix' => 'v1', 
     'as' => 'api.', 
-    'namespace' => 'App\Http\Controllers\V1', 
+    'namespace' => 'App\Http\Controllers', 
     'middleware' => []
 ], function () {
     Route::post('register', 'UsersController@store');
@@ -28,7 +28,7 @@ Route::group([
 Route::group([
     'prefix' => 'v1', 
     'as' => 'api.', 
-    'namespace' => 'App\Http\Controllers\V1', 
+    'namespace' => 'App\Http\Controllers', 
     'middleware' => [
             // App\Http\Middleware\HandlePutFormData::class,
             'auth:api',

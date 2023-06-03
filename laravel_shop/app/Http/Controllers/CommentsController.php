@@ -1,31 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\V1;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
-use App\Http\Resources\CategoryResource;
-use App\Models\Category;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\StoreCommentRequest;
+use App\Http\Requests\UpdateCommentRequest;
+use App\Http\Resources\CommentResource;
+use App\Models\Comment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate as FacadesGate;
+use Symfony\Component\HttpFoundation\Response;
 
-
-class CategoriesController extends Controller
+class CommentsController extends Controller
 {
 
     /**
      * @OA\Get(
-     *      path="/api/v1/categories",
-     *      operationId="getCategories",
-     *      tags={"Categories"},
-     *      summary="Get list of categories",
-     *      description="Returns list of categories",
+     *      path="/api/v1/comments",
+     *      operationId="getComments",
+     *      tags={"Comments"},
+     *      summary="Get list of comments",
+     *      description="Returns list of comments",
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Category")
+     *          @OA\JsonContent(ref="#/components/schemas/Comment")
      *       ),
      *      @OA\Response(
      *          response=401,
@@ -43,29 +41,29 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        // abort_if(FacadesGate::denies('categories-get'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(FacadesGate::denies('comments-get'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new CategoryResource(Category::with([])->paginate());
+        return new CommentResource(Comment::with([])->paginate());
     }
 
 
      /**
      * @OA\Post(
-     *      path="/api/v1/categories",
-     *      operationId="insertCategory",
-     *      tags={"Categories"},
-     *      summary="Stores a new category",
+     *      path="/api/v1/comments",
+     *      operationId="insertComment",
+     *      tags={"Comments"},
+     *      summary="Stores a new comment",
      *      description="Stores record in the database",
      *      @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
-     *             @OA\Schema(ref="#/components/schemas/Category")
+     *             @OA\Schema(ref="#/components/schemas/Comment")
      *         )
      *     ),
      *      @OA\Response(
      *          response=201,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Category")
+     *          @OA\JsonContent(ref="#/components/schemas/Comment")
      *       ),
      *      @OA\Response(
      *          response=401,
@@ -77,13 +75,13 @@ class CategoriesController extends Controller
      *      )
      *     )
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(StoreCommentRequest $request)
     {
-        // abort_if(FacadesGate::denies('categories-post') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
+        // abort_if(FacadesGate::denies('comments-post') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
 
-        $Category = Category::create($request->all());
+        $Comment = Comment::create($request->all());
 
-        return (new CategoryResource($Category))
+        return (new CommentResource($Comment))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
@@ -92,15 +90,15 @@ class CategoriesController extends Controller
     
     /**
      * @OA\Get(
-     *      path="/api/v1/categories/{id}",
-     *      operationId="getCategory",
-     *      tags={"Categories"},
-     *      summary="Returns a single category",
+     *      path="/api/v1/comments/{id}",
+     *      operationId="getComment",
+     *      tags={"Comments"},
+     *      summary="Returns a single comment",
      *      description="Retreives record from database",
      *      @OA\Parameter(
      *          name="id",
      *          in="path",
-     *          description="Id of the category which is asked for",
+     *          description="Id of the comment which is asked for",
      *          required=true,
      *          @OA\Schema(
      *              type="string",
@@ -110,7 +108,7 @@ class CategoriesController extends Controller
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Category")
+     *          @OA\JsonContent(ref="#/components/schemas/Comment")
      *       ),
      *      @OA\Response(
      *          response=401,
@@ -124,24 +122,24 @@ class CategoriesController extends Controller
      */
     public function show(int $id)
     {
-        // abort_if(FacadesGate::denies('categories-get') , Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(FacadesGate::denies('comments-get') , Response::HTTP_FORBIDDEN, '403 Forbidden');
         
-        $category = Category::findOrFail($id);
+        $comment = Comment::findOrFail($id);
 
-        return new CategoryResource($category);
+        return new CommentResource($comment);
     }
 
 
     
     /**
      * @OA\Put(
-     *      path="/api/v1/categories/{id}",
-     *      tags={"Categories"},
-     *      summary="Updates a single category",
+     *      path="/api/v1/comments/{id}",
+     *      tags={"Comments"},
+     *      summary="Updates a single comment",
      *      description="Updates a record in database",
     *     @OA\Parameter(
     *          name="id",
-    *          description="Category's id",
+    *          description="Comment's id",
     *          required=true,
     *          in="path",
     *          @OA\Schema(
@@ -151,13 +149,13 @@ class CategoriesController extends Controller
      *      @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="application/json",
-     *             @OA\Schema(ref="#/components/schemas/Category")
+     *             @OA\Schema(ref="#/components/schemas/Comment")
      *         )
      *     ),
      *      @OA\Response(
      *          response=202,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Category")
+     *          @OA\JsonContent(ref="#/components/schemas/Comment")
      *       ),
      *      @OA\Response(
      *          response=400,
@@ -177,14 +175,14 @@ class CategoriesController extends Controller
      *      )
      * )
      */
-    public function update(UpdateCategoryRequest $request, string $id)
+    public function update(UpdateCommentRequest $request, string $id)
     {
-        // abort_if(FacadesGate::denies('category-put-delete') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
+        // abort_if(FacadesGate::denies('comments-put-delete') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
 
-        $category = Category::findOrFail($id);
-        $category->update($request->all());
+        $comment = Comment::findOrFail($id);
+        $comment->update($request->all());
 
-        return (new CategoryResource($category))
+        return (new CommentResource($comment))
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
@@ -192,14 +190,14 @@ class CategoriesController extends Controller
     
     /**
      * @OA\Delete(
-     *      path="/api/v1/categories/{id}",
-     *      operationId="deleteCategory",
-     *      tags={"Categories"},
-     *      summary="Delete Existing Category",
+     *      path="/api/v1/comments/{id}",
+     *      operationId="deleteComment",
+     *      tags={"Comments"},
+     *      summary="Delete Existing Comment",
      *      description="Deletes a record and returns no content",
      *      @OA\Parameter(
      *          name="id",
-     *          description="Category's id",
+     *          description="Comment's id",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -225,13 +223,12 @@ class CategoriesController extends Controller
      *      )
      * )
      */
-    public function destroy(Category $category)
+    public function destroy(Comment $comment)
     {
-        // abort_if(FacadesGate::denies('categories-put-delete') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
+        // abort_if(FacadesGate::denies('comments-put-delete') , Response:: HTTP_FORBIDDEN , '403 Forbidden');
 
-        $category->delete();
+        $comment->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
