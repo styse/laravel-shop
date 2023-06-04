@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Gate as FacadesGate;
 
-class providersController extends Controller
+class ProvidersController extends Controller
 {
 
     /**
